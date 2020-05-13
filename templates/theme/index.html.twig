@@ -1,20 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ThemeController!{% endblock %}
+{% block title %}Theme index{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <section id="services" class="services-section section-global-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="services-header">
+                    <h3 class="services-header-title">Liste des themes</h3>
+                    <p class="services-header-body"><em> To fish peach or not to peach fish </em>  </p><hr>
+                </div>
+            </div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+            <!-- Begin Services Row 1 -->
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    {% for theme in themes %}
+                    <div class="services-group wow animated zoomIn animated" data-wow-offset="40" style="visibility: visible; animation-name: zoomIn;">
+                        <p class="services-icon"><i class="fa fa-apple fa-5x"></i></p>
+                        <h4 class="services-title">Theme</h4>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/app/src/Controller/ThemeController.php'|file_link(0) }}">src/Controller/ThemeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/app/templates/theme/index.html.twig'|file_link(0) }}">templates/theme/index.html.twig</a></code></li>
-    </ul>
-</div>
+                            <p class="services-body">Titre:{{ theme.title }} <br>Description: {{ theme.description }}</p>
+                        {% else %}
+                            <p class="services-body">Aucun donnée</p>
+                            <br>
+                        {% endfor %}
+                        <p class="services-more"> <a href="{{ path('theme_new') }}">Ajouter un nouveau theme</a></p>
+                    </div>
+                </div>
+            </div>
+            <!-- End Serivces Row 1 -->
+    </section>
 {% endblock %}

@@ -2,14 +2,19 @@
 
 namespace App\Entity;
 
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity("email")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -19,47 +24,51 @@ class User
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=50)
      */
     private $firstname;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=50)
      */
     private $lastname;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Email()
      * @ORM\Column(type="string", length=150)
      */
     private $email;
 
+    private $password;
+
+    private $plainPassword;
     /**
-     * @ORM\Column(type="date")
+     * @ORM\OneToMany(targetEntity="App\Entity\Location", mappedBy="location", orphanRemoval=true)
      */
-    private $birthday;
+    private $location;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Adress", mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Annonce", mappedBy="annonce", orphanRemoval=true)
      */
-    private $adress;
-
+    private $annonce;
     /**
      * @ORM\Column(type="simple_array")
      */
-    private $roles = [];
-
+    private $roles;
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="user")
+     * @ORM\Column()
+     * @Assert\NotBlank()
+     * @Assert\Length(max=10)
+     *
      */
-    private $post;
-
 
     public function __construct()
     {
-        $this->street = new ArrayCollection();
-        $this->post = new ArrayCollection();
+        $this->roles = array('ROLE_USER');
+        $this->location = new ArrayCollection();
+        $this->annonce = new ArrayCollection();
     }
-
 
     public function getId(): ?int
     {
@@ -102,71 +111,107 @@ class User
         return $this;
     }
 
-    public function getBirthday(): ?\DateTimeInterface
+    public function getPassword(): ?string
     {
-        return $this->birthday;
+        return $this->password;
     }
 
-    public function setBirthday(\DateTimeInterface $birthday): self
+    public function setPassword(string $password): void
     {
-        $this->birthday = $birthday;
-
-        return $this;
+        $this->password = $password;
     }
 
-    public function getAdress(): ?string
-    {
-        return $this->adress;
-    }
-
-    public function setAdress(?string $adress): self
-    {
-        $this->adress = $adress;
-
-        return $this;
-    }
-
-    public function getRoles(): ?array
+    public function getRoles()
     {
         return $this->roles;
     }
 
-    public function setRoles(array $roles): self
+    public function setRoles($roles)
     {
         $this->roles = $roles;
-
         return $this;
     }
 
-    /**
-     * @return Collection|Post[]
-     */
-    public function getPost(): Collection
+    public function getSalt()
     {
-        return $this->post;
+        return null;
+    }
+    public function getUsername()
+    {
+        return $this->email;
+    }
+    public function eraseCredentials(){
+
     }
 
-    public function addPost(Post $post): self
+    public function getPlainPassword() :?string
     {
-        if (!$this->post->contains($post)) {
-            $this->post[] = $post;
-            $post->setUser($this);
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(string $plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+    }
+    /**
+     * @return Collection|Location[]
+     */
+    public function getLocation(): Collection
+    {
+        return $this->location;
+    }
+
+    public function addLocation(Location $location): self
+    {
+        if (!$this->location->contains($location)) {
+            $this->location[] = $location;
+            $location->setLocation($this);
         }
 
         return $this;
     }
 
-    public function removePost(Post $post): self
+    public function removeLocation(Location $location): self
     {
-        if ($this->post->contains($post)) {
-            $this->post->removeElement($post);
+        if ($this->location->contains($location)) {
+            $this->location->removeElement($location);
             // set the owning side to null (unless already changed)
-            if ($post->getUser() === $this) {
-                $post->setUser(null);
+            if ($location->getLocation() === $this) {
+                $location->setLocation(null);
             }
         }
 
         return $this;
     }
 
+    /**
+     * @return Collection|Annonce[]
+     */
+    public function getAnnonce(): Collection
+    {
+        return $this->annonce;
+    }
+
+    public function addAnnonce(Annonce $annonce): self
+    {
+        if (!$this->annonce->contains($annonce)) {
+            $this->annonce[] = $annonce;
+            $annonce->setAnnonce($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnnonce(Annonce $annonce): self
+    {
+        if ($this->annonce->contains($annonce)) {
+            $this->annonce->removeElement($annonce);
+            // set the owning side to null (unless already changed)
+            if ($annonce->getAnnonce() === $this) {
+                $annonce->setAnnonce(null);
+            }
+        }
+
+        return $this;
+    }
 }

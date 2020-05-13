@@ -1,20 +1,71 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}User index{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h1>User index</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.lastname }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                    <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
+                    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/app/src/Controller/UserController.php'|file_link(0) }}">src/Controller/UserController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/app/templates/user/index.html.twig'|file_link(0) }}">templates/user/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <a href="{{ path('user_new') }}">Create new</a>
+
+    <!-- Begin Services Row 2 -->
+    <div class="row services-row services-row-tail services-row-2">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <div class="services-group wow animated fadeInLeft animated" data-wow-offset="40" style="visibility: visible; animation-name: fadeInLeft;">
+                <p class="services-icon"><span class="fa fa-windows fa-5x"></span></p>
+                <h4 class="services-title">Windows</h4>
+                <p class="services-body">Cras interdum placerat libero vel tempor. Curabitur gravida iaculis erat quis dignissim.</p>
+                <p class="services-more"><a href="#">Find Out More</a></p>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <div class="services-group wow animated zoomIn animated" data-wow-offset="40" style="visibility: visible; animation-name: zoomIn;">
+                <p class="services-icon"><i class="fa fa-eye fa-5x"></i></p>
+                <h4 class="services-title">RETINA READY</h4>
+                <p class="services-body">Cras interdum placerat libero vel tempor. Curabitur gravida iaculis erat quis dignissim.</p>
+                <p class="services-more"><a href="#">Find Out More</a></p>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <div class="services-group wow animated fadeInRight animated" data-wow-offset="40" style="visibility: visible; animation-name: fadeInRight;">
+                <p class="services-icon"><i class="fa fa-cube fa-5x"></i></p>
+                <h4 class="services-title">Cubic</h4>
+                <p class="services-body">Cras interdum placerat libero vel tempor. Curabitur gravida iaculis erat quis dignissim.</p>
+                <p class="services-more"><a href="#">Find Out More</a></p>
+            </div>
+        </div>
+    </div>
+    <!-- End Serivces Row 2 -->
+
 {% endblock %}
