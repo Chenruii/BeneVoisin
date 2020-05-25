@@ -28,14 +28,14 @@ class DefaultController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/form", name="contact")
-     */
+	/**
+	 * @Route("/form", name="contact")
+	 * @param Request $request
+	 */
 
     public function createAction(Request $request)
     {
         $contact = new Contact;
-
 
         $form = $this->createFormBuilder($contact)
             ->add('name', TextType::class, array('label' => 'name', 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))

@@ -44,12 +44,14 @@ class User implements UserInterface
 
     private $plainPassword;
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Location", mappedBy="location", orphanRemoval=true)
-     */
-    private $location;
+	 * @ORM\Column(type="integer", nullable=true)
+	 * @ORM\ManyToMany(targetEntity="App\Entity\Location", inversedBy="users")
+	 */
+    private $locations;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Annonce", mappedBy="annonce", orphanRemoval=true)
+	 * @ORM\Column(type="integer", nullable=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Annonce", mappedBy="user", orphanRemoval=true)
      */
     private $annonce;
     /**
@@ -66,7 +68,7 @@ class User implements UserInterface
     public function __construct()
     {
         $this->roles = array('ROLE_USER');
-        $this->location = new ArrayCollection();
+        $this->locations = new ArrayCollection();
         $this->annonce = new ArrayCollection();
     }
 
@@ -156,16 +158,15 @@ class User implements UserInterface
     /**
      * @return Collection|Location[]
      */
-    public function getLocation(): Collection
+    public function getLocations(): Collection
     {
-        return $this->location;
+        return $this->locations;
     }
 
     public function addLocation(Location $location): self
     {
-        if (!$this->location->contains($location)) {
-            $this->location[] = $location;
-            $location->setLocation($this);
+        if (!$this->locations->contains($location)) {
+            $this->locations[] = $location;
         }
 
         return $this;
@@ -173,14 +174,10 @@ class User implements UserInterface
 
     public function removeLocation(Location $location): self
     {
-        if ($this->location->contains($location)) {
-            $this->location->removeElement($location);
+        if ($this->locations->contains($location)) {
+            $this->locations->removeElement($location);
             // set the owning side to null (unless already changed)
-            if ($location->getLocation() === $this) {
-                $location->setLocation(null);
-            }
         }
-
         return $this;
     }
 
@@ -196,7 +193,7 @@ class User implements UserInterface
     {
         if (!$this->annonce->contains($annonce)) {
             $this->annonce[] = $annonce;
-            $annonce->setAnnonce($this);
+			$annonce->setAuthor($this);
         }
 
         return $this;
@@ -207,11 +204,10 @@ class User implements UserInterface
         if ($this->annonce->contains($annonce)) {
             $this->annonce->removeElement($annonce);
             // set the owning side to null (unless already changed)
-            if ($annonce->getAnnonce() === $this) {
-                $annonce->setAnnonce(null);
-            }
+			if ($annonce->getAuthor() === $this) {
+				$annonce->setAuthor( null );
+			}
         }
-
         return $this;
     }
 }
