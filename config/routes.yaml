@@ -1,3 +1,6 @@
 index:
     path: /
     controller: App\Controller\AnnonceController::index
+
+logout:
+    path: /logout

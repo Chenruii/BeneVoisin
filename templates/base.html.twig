@@ -17,31 +17,64 @@
 
     </head>
     <body>
+    {% set route = app.request.attributes.get('_route') %}
         <div id="sidebar">
             {% block sidebar %}
                 <div id="navbar-spy" class="collapse navbar-collapse navbar-responsive-collapse">
+                    {% if is_granted( 'IS_AUTHENTICATED_FULLY') %}
+
+                    {% else %}
+
+                    {% endif %}
                     <ul class="nav navbar-nav pull-right">
-                        <li class="active">
-                            <a href="#">Home</a>
-                        </li>
-                        <li>
-                            <a href="about.html">About</a>
-                        </li>
-                        <li>
-                            <a href="blog.html">Blog</a>
-                        </li>
-                        <li>
-                            <a href="team.html">Team</a>
-                        </li>
-                        <li>
-                            <a href="#"><span>Contact</span></a>
-                        </li>
+                        {% if is_granted( 'IS_AUTHENTICATED_FULLY') %}
+                            <li class="active"><a href="#">Tableau de bord</a></li>
+                        {% else %}
+                            <li class="active"><a href="{{ path("annonce_index") }}">Accueil</a></li>
+                        {% endif %}
+
+                        {% if is_granted( 'IS_AUTHENTICATED_FULLY') %}
+                            <li class="active"><a href="">Mon Profil</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbar-spy" id="fistTop">
+                                    <li><a href="">Information sur mon compte</a></li>
+                                    {% if is_granted( 'ROLE_OWNER') %}
+                                    <li class="dropdown-submenu"><a href="">Mes annonces</a>
+                                        <ul class="dropdown-menu" id="secondDrop">
+                                            <li class="dropdown-item dropdown-toggle"><a href="">Liste</a></li>
+                                            <li class="dropdown-item"><a href="">Ajouter une annonce</a></li>
+                                            <li class="dropdown-item"><a href="">Ajouter une Adresse</a></li>
+                                            <li class="dropdown-item"><a href="">Ajouter un Thème</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu"><a href="">Mes Adresses</a>
+                                        <ul class="dropdown-menu" id="secondDrop">
+                                            <li class="dropdown-item dropdown-toggle"><a href="">Historique de mes evevnements</a></li>
+                                            <li class="dropdown-item"><a href="">Les evenements en cours</a></li>
+                                            <li class="dropdown-item"><a href="">Les évènement à venir</a></li>
+                                        </ul>
+                                     </li>
+                                    {% endif %}
+                                </ul>
+                            </li>
+                        {% else %}
+                            <li><a href="about.html">About</a></li>
+                            <li class="ongletMenu"><a href="{{ path("login") }}">Se connecter</a></li>
+                            <li class="ongletMenu"><a href="{{ path("register") }}">S'enregistrer</a></li>
+                            <li><a href="#"><span>Contact</span></a></li>
+                        {% endif %}
                     </ul>
                 </div>
             {% endblock %}
         </div>
 
         <div id="content">
+            {% if is_granted( 'IS_AUTHENTICATED_FULLY') %}
+                <div>
+                <p>Email: {{ app.user.email }}</p>
+            {% else %}
+                <p>Welcome Anonymous</p>
+                </div>
+            {% endif %}
             <div name="contact">
                 <div class="alert alert-success">
                     {% set flashbag_notices = app.session.flashbag.get('notice') %}
@@ -59,8 +92,7 @@
         </div>
         <!-- Footer -->
         <footer class="page-footer font-small stylish-color-dark pt-4">
-
-            <!-- Footer Links -->
+        <!-- Footer Links -->
             <div class="container text-center text-md-left">
 
                 <!-- Grid row -->
