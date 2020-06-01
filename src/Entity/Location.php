@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\LocationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,83 +12,155 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Location
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+	/**
+	 * @ORM\Id()
+	 * @ORM\GeneratedValue()
+	 * @ORM\Column(type="integer")
+	 */
+	private $id;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $city;
+	/**
+	 * @ORM\Column(type="integer", length=200)
+	 */
+	private $identifier;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $zipCode;
+	/**
+	 * @ORM\Column(type="integer", nullable=true)
+	 * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="locations")
+	 */
+	private $users;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $street;
+	/**
+	 * @ORM\Column(type="string", length=255)
+	 */
+	private $street;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="location")
-     */
-    private $location;
+	/**
+	 * @ORM\Column(type="string", length=255)
+	 */
+	private $city;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+	/**
+	 * @ORM\Column(type="integer", nullable=true)
+	 */
+	private $zipCode;
 
-    public function getCity(): ?string
-    {
-        return $this->city;
-    }
+	/**
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	private $country;
 
-    public function setCity(string $city): self
-    {
-        $this->city = $city;
+	public function __construct()
+	{
+		$this->users = new ArrayCollection();
+	}
 
-        return $this;
-    }
+	public function getId(): ?int
+	{
+		return $this->id;
+	}
 
-    public function getZipCode(): ?int
-    {
-        return $this->zipCode;
-    }
+	/**
+	 * @return mixed
+	 */
+	public function getIdentifier()
+	{
+		return $this->identifier;
+	}
 
-    public function setZipCode(int $zipCode): self
-    {
-        $this->zipCode = $zipCode;
+	/**
+	 * @param mixed $identifier
+	 */
+	public function setIdentifier($identifier): void
+	{
+		$this->identifier = $identifier;
+	}
 
-        return $this;
-    }
+	/**
+	 * @return Collection|User[]
+	 */
+	public function getUsers(): Collection
+	{
+		return $this->users;
+	}
+	public function addUser(User $user): self
+	{
+		if (!$this->users->contains($user)) {
+			$this->users[] = $user;
+			$user->addLocation($this);
+		}
+		return $this;
+	}
+	public function removeUser(User $user): self
+	{
+		if ($this->users->contains($user)) {
+			$this->users->removeElement($user);
+			$user->removeLocation($this);
+		}
+		return $this;
+	}
 
-    public function getStreet(): ?string
-    {
-        return $this->street;
-    }
+	/**
+	 * @return mixed
+	 */
+	public function getStreet()
+	{
+		return $this->street;
+	}
 
-    public function setStreet(string $street): self
-    {
-        $this->street = $street;
+	/**
+	 * @param mixed $street
+	 */
+	public function setStreet($street): void
+	{
+		$this->street = $street;
+	}
 
-        return $this;
-    }
+	/**
+	 * @return mixed
+	 */
+	public function getCity()
+	{
+		return $this->city;
+	}
 
-    public function getLocation(): ?User
-    {
-        return $this->location;
-    }
+	/**
+	 * @param mixed $city
+	 */
+	public function setCity($city): void
+	{
+		$this->city = $city;
+	}
 
-    public function setLocation(?User $location): self
-    {
-        $this->location = $location;
+	/**
+	 * @return mixed
+	 */
+	public function getZipCode()
+	{
+		return $this->zipCode;
+	}
 
-        return $this;
-    }
+	/**
+	 * @param mixed $zipCode
+	 */
+	public function setZipCode($zipCode): void
+	{
+		$this->zipCode = $zipCode;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getCountry()
+	{
+		return $this->country;
+	}
+
+	/**
+	 * @param mixed $country
+	 */
+	public function setCountry($country): void
+	{
+		$this->country = $country;
+	}
 }

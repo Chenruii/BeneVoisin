@@ -15,9 +15,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AnnonceController extends AbstractController
 {
-    /**
-     * @Route("/", name="annonce_index", methods={"GET"})
-     */
+	/**
+	 * @Route("/", name="annonce_index", methods={"GET"})
+	 * @param AnnonceRepository $annonceRepository
+	 * @return Response
+	 */
     public function index(AnnonceRepository $annonceRepository): Response
     {
         return $this->render('annonce/index.html.twig', [
@@ -25,9 +27,11 @@ class AnnonceController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/new", name="annonce_new", methods={"GET","POST"})
-     */
+	/**
+	 * @Route("/new", name="annonce_new", methods={"GET","POST"})
+	 * @param Request $request
+	 * @return Response
+	 */
     public function new(Request $request): Response
     {
         $annonce = new Annonce();
