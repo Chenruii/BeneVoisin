@@ -18,9 +18,14 @@ class Annonce
 	 */
 	private $id;
 
-	/**
-	 * @ORM\Column(type="string", length=200)
-	 */
+   /**
+   * @Assert\NotBlank(message="le titre ne doit pas être vide")
+   * @Assert\Length(
+   *   max=200,
+   *   maxMessage="le titre ne doit pas dépasser 200 caractères"
+   * )
+   * @ORM\Column(type="string", length=200)
+   */
 	private $title;
 
 	/**
@@ -29,6 +34,7 @@ class Annonce
 	private $description;
 
 	/**
+   * @Assert\NotBlank(message="le contenu ne doit pas être vide")
 	 * @ORM\Column(type="text", length=255)
 	 */
 	private $content;

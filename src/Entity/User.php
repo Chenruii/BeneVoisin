@@ -24,12 +24,12 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50,nullable=true)
      */
     private $firstname;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50,nullable=true)
      */
     private $lastname;
 
@@ -58,12 +58,6 @@ class User implements UserInterface
      * @ORM\Column(type="simple_array")
      */
     private $roles;
-    /**
-     * @ORM\Column()
-     * @Assert\NotBlank()
-     * @Assert\Length(max=10)
-     *
-     */
 
     public function __construct()
     {
