@@ -26,3 +26,6 @@
   - Développer sa sociabilité
   - Agrandir sa communauté de vie
   - Parfaire ses savoirs-faire
+
+
+[![Build Status](https://travis-ci.org/Sidfate/helpers.svg?branch=master)](https://travis-ci.org/Sidfate/helpers)
