@@ -11,90 +11,111 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Annonce
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+	/**
+	 * @ORM\Id()
+	 * @ORM\GeneratedValue()
+	 * @ORM\Column(type="integer")
+	 */
+	private $id;
 
-    /**
-     * @Assert\NotBlank(message="le titre ne doit pas être vide")
-     * @Assert\Length(
-     *   max=200,
-     *   maxMessage="le titre ne doit pas dépasser 200 caractères"
-     * )
-     * @ORM\Column(type="string", length=200)
-     */
-    private $title;
+   /**
+   * @Assert\NotBlank(message="le titre ne doit pas être vide")
+   * @Assert\Length(
+   *   max=200,
+   *   maxMessage="le titre ne doit pas dépasser 200 caractères"
+   * )
+   * @ORM\Column(type="string", length=200)
+   */
+	private $title;
 
-    /**
-     * @Assert\NotBlank(message="le contenu ne doit pas être vide")
-     * @ORM\Column(type="text")
-     */
-    private $content;
+	/**
+	 * @ORM\Column(type="string", length=255)
+	 */
+	private $description;
 
-    /**
-     * Get id
-     * @ORM\Column(type="string", length=20,nullable=true)
-     */
-    private $author;
+	/**
+   * @Assert\NotBlank(message="le contenu ne doit pas être vide")
+	 * @ORM\Column(type="text", length=255)
+	 */
+	private $content;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="annonce")
-     */
-    private $annonce;
+	/**
+	 * @ORM\Column(type="integer", length=255, nullable=true)
+	 * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="annonces")
+	 * @ORM\JoinColumn(nullable=false)
+	 */
+	private $author;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+	/**
+	 * @Assert\DateTime
+	 * @ORM\Column(type="datetime", nullable=true)
+	 */
+	private $datePost;
 
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
+	public function getId(): ?int
+	{
+		return $this->id;
+	}
 
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
+	public function getTitle(): ?string
+	{
+		return $this->title;
+	}
 
-        return $this;
-    }
+	public function setTitle(string $title): self
+	{
+		$this->title = $title;
 
-    public function getContent(): ?string
-    {
-        return $this->content;
-    }
+		return $this;
+	}
 
-    public function setContent(string $content): self
-    {
-        $this->content = $content;
+	public function getDescription(): ?string
+	{
+		return $this->description;
+	}
 
-        return $this;
-    }
+	public function setDescription(string $description): self
+	{
+		$this->description = $description;
 
-    public function getAuthor(): ?string
-    {
-        return $this->author;
-    }
+		return $this;
+	}
 
-    public function setAuthor(string $author): self
-    {
-        $this->author = $author;
+	public function getDatePost(): ?\DateInterval
+	{
+		return $this->datePost;
+	}
 
-        return $this;
-    }
+	public function setDatePost(?\DateInterval $datePost): self
+	{
+		$this->datePost = $datePost;
 
-    public function getAnnonce(): ?User
-    {
-        return $this->annonce;
-    }
+		return $this;
+	}
 
-    public function setAnnonce(?User $annonce): self
-    {
-        $this->annonce = $annonce;
+	/**
+	 * @return mixed
+	 */
+	public function getContent()
+	{
+		return $this->content;
+	}
 
-        return $this;
-    }
+	/**
+	 * @param mixed $content
+	 */
+	public function setContent($content): void
+	{
+		$this->content = $content;
+	}
+
+	public function getAuthor(): ?User
+	{
+		return $this->author;
+	}
+	public function setAuthor(?User $author): self
+	{
+		$this->author = $author;
+		return $this;
+	}
 }

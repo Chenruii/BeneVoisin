@@ -15,9 +15,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class LocationController extends AbstractController
 {
-    /**
-     * @Route("/", name="location_index", methods={"GET"})
-     */
+	/**
+	 * @Route("/", name="location_index", methods={"GET"})
+	 * @param LocationRepository $locationRepository
+	 * @return Response
+	 */
     public function index(LocationRepository $locationRepository): Response
     {
         return $this->render('location/index.html.twig', [
@@ -25,9 +27,11 @@ class LocationController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/new", name="location_new", methods={"GET","POST"})
-     */
+	/**
+	 * @Route("/new", name="location_new", methods={"GET","POST"})
+	 * @param Request $request
+	 * @return Response
+	 */
     public function new(Request $request): Response
     {
         $location = new Location();
@@ -48,9 +52,11 @@ class LocationController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="location_show", methods={"GET"})
-     */
+	/**
+	 * @Route("/{id}", name="location_show", methods={"GET"})
+	 * @param Location $location
+	 * @return Response
+	 */
     public function show(Location $location): Response
     {
         return $this->render('location/show.html.twig', [
@@ -58,9 +64,12 @@ class LocationController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="location_edit", methods={"GET","POST"})
-     */
+	/**
+	 * @Route("/{id}/edit", name="location_edit", methods={"GET","POST"})
+	 * @param Request $request
+	 * @param Location $location
+	 * @return Response
+	 */
     public function edit(Request $request, Location $location): Response
     {
         $form = $this->createForm(LocationType::class, $location);
@@ -78,9 +87,12 @@ class LocationController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="location_delete", methods={"DELETE"})
-     */
+	/**
+	 * @Route("/{id}", name="location_delete", methods={"DELETE"})
+	 * @param Request $request
+	 * @param Location $location
+	 * @return Response
+	 */
     public function delete(Request $request, Location $location): Response
     {
         if ($this->isCsrfTokenValid('delete'.$location->getId(), $request->request->get('_token'))) {
