@@ -8,6 +8,7 @@ use App\Form\ProfileUserType;
 use App\Form\RegisterUserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -47,14 +48,24 @@ class SecurityController extends AbstractController
     /**
      * @Route("/login", name="login")
      */
-    public function login(AuthenticationUtils $authenticationUtils)
+    public function login(AuthenticationUtils $authenticationUtils):Response
     {
-        $user = new User();
+        /*$user = new User();
         $form = $this->createForm(LoginUserType::class, $user);
+
         return $this->render('security/login.html.twig', [
             'error' => $authenticationUtils->getLastAuthenticationError(),
             'form' => $form->createView()
+        ]);*/
+
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $email = $authenticationUtils->getLastUsername();
+
+        return $this->render('security/login.html.twig', [
+            'email' => $email,
+            'error' => $error
         ]);
+
     }
     /**
      * @Route("/profile", name="profile")
@@ -72,6 +83,11 @@ class SecurityController extends AbstractController
         return $this->render('security/profile.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    public function logout()
+    {
+        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
 }

@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\ResidenceRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=ResidenceRepository::class)
@@ -41,6 +43,13 @@ class Residence
      * @ORM\Column(type="string", length=7)
      */
     private $zipCode;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @ManyToOne(targetEntity="User", inversedBy="residences")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
     public function getId(): ?int
     {
@@ -103,6 +112,17 @@ class Residence
     public function setZipCode(string $zipCode): self
     {
         $this->zipCode = $zipCode;
+
+        return $this;
+    }
+    public function getUsers(): ?string
+    {
+        return $this->user;
+    }
+
+    public function setUsers(string $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
