@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Annonce index{% endblock %}
+{% block title %}post index{% endblock %}
 
 {% block body %}
 
@@ -8,28 +8,34 @@
         <div class="container">
             <div class="row">
                 <div class="services-header">
-                    <h3 class="services-header-title">Liste des annonces</h3>
+                    <h3 class="services-header-title">Liste des posts</h3>
                     <p class="services-header-body"><em> To fish peach or not to peach fish </em>  </p><hr>
                 </div>
             </div>
 
             <!-- Begin Services Row 1 -->
             <div class="row services-row services-row-head services-row-1">
+
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+
                     <div class="services-group wow animated fadeInLeft animated" data-wow-offset="40" style="visibility: visible; animation-name: fadeInLeft;">
                         <p class="services-icon"><span class="fa fa-android fa-5x"></span></p>
-                        <h4 class="services-title">Annonce</h4>
-                        {% for annonce in annonces %}
-                        <p class="services-body">Titre: {{ annonce.title }} <br>{{ annonce.content }}<br>{{ annonce.author }}</p>
+                        <h4 class="services-title">post</h4>
+                        {% if posts is not empty %}
+                        {% for post in posts %}
+                        <p class="services-body">Titre: {{ post.titlePost }} <br>{{ post.descriptionPost }}<br>{{ post.announcer }}</p>
                         {% else %}
-                        <p class="services-body">Aucun donnée</p>
+                            <p class="services-body">Aucun donnée</p>
                             <br>
-                            <p class="services-more"><a href="{{ path('annonce_show', {'id': annonce.id}) }}">Voir</a></p>
-                            <p class="services-more"><a href="{{ path('annonce_edit', {'id': annonce.id}) }}">Editer</a></p>
+                            <p class="services-more"><a href="{{ path('post_show', {'id': posts.id}) }}">Voir</a></p>
+                            <p class="services-more"><a href="{{ path('post_edit', {'id': posts.id}) }}">Editer</a></p>
                         {% endfor %}
-
+                        {% else %}
+                            <p>Pas d'posts disponbles !</p>
+                        {% endif %}
                     </div>
-                    <p class="services-more"><a href="{{ path('annonce_new') }}">Ajouter une annonce</a></p>
+
+                    <p class="services-more"><a href="{{ path('post_new') }}">Ajouter une post</a></p>
                 </div>
             </div>
             <!-- End Serivces Row 1 -->

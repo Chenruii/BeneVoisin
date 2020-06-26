@@ -22,8 +22,13 @@ class Kernel extends BaseKernel
             if ($envs[$this->environment] ?? $envs['all'] ?? false) {
                 yield new $class();
             }
+            /*if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
+                // ...
+                $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
+            }*/
         }
     }
+
 
     public function getProjectDir(): string
     {

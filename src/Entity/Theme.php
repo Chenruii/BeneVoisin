@@ -18,57 +18,40 @@ class Theme
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=200)
+     * @ORM\Column(type="string", length=150)
      */
-    private $title;
+    private $titleTheme;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
-    private $description;
-
-    /**
-     * @ORM\Column(type="dateinterval", nullable=true)
-     */
-    private $datePost;
+    private $descriptionTheme;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getTitleTheme(): ?string
     {
-        return $this->title;
+        return $this->titleTheme;
     }
 
-    public function setTitle(string $title): self
+    public function setTitleTheme(string $titleTheme): self
     {
-        $this->title = $title;
+        $this->titleTheme = $titleTheme;
 
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getDescriptionTheme(): ?string
     {
-        return $this->description;
+        return $this->descriptionTheme;
     }
 
-    public function setDescription(string $description): self
+    public function setDescriptionTheme(string $descriptionTheme): self
     {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    public function getDatePost(): ?\DateInterval
-    {
-        return $this->datePost;
-    }
-
-    public function setDatePost(?\DateInterval $datePost): self
-    {
-        $this->datePost = $datePost;
+        $this->descriptionTheme = $descriptionTheme;
 
         return $this;
     }

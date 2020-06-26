@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Residence;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -13,7 +14,6 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
-
 
 
 class DefaultController extends AbstractController
@@ -28,14 +28,14 @@ class DefaultController extends AbstractController
         ]);
     }
 
-	/**
-	 * @Route("/form", name="contact")
-	 * @param Request $request
-	 */
+    /**
+     * @Route("/form", name="contact")
+     * @param Request $request
+     */
 
     public function createAction(Request $request)
     {
-        $contact = new Contact;
+        $contact = new Residence;
 
         $form = $this->createFormBuilder($contact)
             ->add('name', TextType::class, array('label' => 'name', 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))

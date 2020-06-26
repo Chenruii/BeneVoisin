@@ -1,6 +1,6 @@
 index:
     path: /
-    controller: App\Controller\AnnonceController::index
+    controller: App\Controller\PostController::index
 
 logout:
     path: /logout

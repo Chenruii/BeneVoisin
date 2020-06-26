@@ -35,7 +35,20 @@ Besoin des logiciel
 - [Docker Compose](https://docs.docker.com/compose/install)
 
 ## Installation
+pour lancer la fixture
+php bin/console doctrine:fixtures:load --purge-with-truncate
+
+pour purger
+php bin/console doctrine:fixtures:load --purger=my_purger
+
 # Démarrage
+demarrer docker
+
+docker-compose up -d
+
+lance le server 
+docker-compose exec web php/console server:run
+
 # Fabriqué avec
 - Boostrap.css - Framework CSS (front-end)
 - Phpstorm - IDE 
