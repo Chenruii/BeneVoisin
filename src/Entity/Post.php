@@ -34,19 +34,16 @@ class Post
     private $descriptionPost;
 
     /**
-     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=50)
      */
     private $announcer;
 
     /**
-     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=255)
      */
     private $contact;
 
     /**
-     * @Assert\NotBlank()
      * @ORM\Column(type="date")
      */
     private $dateEvent;
@@ -57,7 +54,6 @@ class Post
     private $placeEvent;
 
     /**
-     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=255)
      */
     private $postType;

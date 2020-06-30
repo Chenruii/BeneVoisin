@@ -43,9 +43,7 @@ php bin/console doctrine:fixtures:load --purger=my_purger
 
 # Démarrage
 demarrer docker
-
 docker-compose up -d
-
 lance le server 
 docker-compose exec web php/console server:run
 
@@ -55,8 +53,7 @@ docker-compose exec web php/console server:run
 # Contributing
 # Versions
 # Author 
-- Rui
+- Rui   
 - Justine
-Rui + Justine
 # License
 Ce projet est sous licence MIT - voir le fichier LICENSE.md pour plus d'informations

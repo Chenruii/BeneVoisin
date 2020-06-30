@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Theme index{% endblock %}
+{% block title %}Accueil des thèmes{% endblock %}
 
-{% block body %}
+{% block content %}
     <section id="services" class="services-section section-global-wrapper">
         <div class="container">
             <div class="row">
                 <div class="services-header">
                     <h3 class="services-header-title">Liste des themes</h3>
-                    <p class="services-header-body"><em> To fish peach or not to peach fish </em>  </p><hr>
+                    <p class="services-header-body"><em>"To fish peach or not to peach fish"</em>  </p><hr>
                 </div>
             </div>
 
@@ -17,11 +17,11 @@
                     {% for theme in themes %}
                     <div class="services-group wow animated zoomIn animated" data-wow-offset="40" style="visibility: visible; animation-name: zoomIn;">
                         <p class="services-icon"><i class="fa fa-apple fa-5x"></i></p>
-                        <h4 class="services-title">Theme</h4>
+                        <h4 class="services-title">Thème</h4>
 
                             <p class="services-body">Titre:{{ theme.title }} <br>Description: {{ theme.description }}</p>
                         {% else %}
-                            <p class="services-body">Aucun donnée</p>
+                            <p class="services-body">Aucun thème à afficher</p>
                             <br>
                         {% endfor %}
                         <p class="services-more"> <a href="{{ path('theme_new') }}">Ajouter un nouveau theme</a></p>

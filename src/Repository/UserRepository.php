@@ -47,4 +47,19 @@ class UserRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findOneByIdJoinedToPost($id)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT p, c FROM AppBundle:User p
+            JOIN p.post c
+            WHERE p.id = :id'
+            )->setParameter('id', $id);
+
+        try {
+            return $query->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 }

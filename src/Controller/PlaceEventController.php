@@ -45,7 +45,7 @@ class PlaceEventController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="placeEvent_show", methods={"GET"})
+     * @Route("/{id}", name="placeEvent_show", methods={"GET"}, requirements={"id":"\d+"})
      */
     public function show(placeEvent $placeEvent): Response
     {

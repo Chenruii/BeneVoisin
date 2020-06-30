@@ -1,220 +1,54 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Plateforme d'annonces{% endblock %}</title>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Plateforme d'annonces{% endblock %}</title>
 
-        <!-- meta data & title -->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="">
-        <meta name="author" content="">
+    <!-- meta data & title -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-        <!-- CSS -->
-        <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
-        <link href="{{ asset('css/animate.min.css') }}" rel="stylesheet" />
-        <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" />
-        <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet" />
+    <!-- CSS -->
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/animate.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet" />
 
-    </head>
-    <body>
-    {% set route = app.request.attributes.get('_route') %}
-        <div id="sidebar">
-            {% block sidebar %}
-                <div id="navbar-spy" class="collapse navbar-collapse navbar-responsive-collapse">
-                    {% if is_granted( 'IS_AUTHENTICATED_FULLY') %}
+</head>
+<body>
+{% set route = app.request.attributes.get('_route') %}
+{% block header %}
+    {% include('header.html.twig') %}
+{% endblock %}
 
-                    {% else %}
-
-                    {% endif %}
-                    <ul class="nav navbar-nav pull-right">
-                        {% if is_granted( 'IS_AUTHENTICATED_FULLY') %}
-                            <li class="active"><a href="#">Tableau de bord</a></li>
-                        {% else %}
-                            <li class="active"><a href="{{ path("post_index") }}">Accueil</a></li>
-                        {% endif %}
-
-                        {% if is_granted( 'IS_AUTHENTICATED_FULLY') %}
-                            <li class="active"><a href="">Mon Profil</a>
-                                <ul class="dropdown-menu" aria-labelledby="navbar-spy" id="fistTop">
-                                    <li><a href="">Information sur mon compte</a></li>
-                                    {% if is_granted( 'ROLE_OWNER') %}
-                                    <li class="dropdown-submenu"><a href="">Mes annonces</a>
-                                        <ul class="dropdown-menu" id="secondDrop">
-                                            <li class="dropdown-item dropdown-toggle"><a href="">Liste</a></li>
-                                            <li class="dropdown-item"><a href="">Ajouter une annonce</a></li>
-                                            <li class="dropdown-item"><a href="">Ajouter une Adresse</a></li>
-                                            <li class="dropdown-item"><a href="">Ajouter un Thème</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu"><a href="">Mes Adresses</a>
-                                        <ul class="dropdown-menu" id="secondDrop">
-                                            <li class="dropdown-item dropdown-toggle"><a href="">Historique de mes evevnements</a></li>
-                                            <li class="dropdown-item"><a href="">Les evenements en cours</a></li>
-                                            <li class="dropdown-item"><a href="">Les évènement à venir</a></li>
-                                        </ul>
-                                     </li>
-                                    {% endif %}
-                                </ul>
-                            </li>
-                        {% else %}
-                            <li><a href="about.html">About</a></li>
-                            <li class="ongletMenu"><a href="{{ path("login") }}">Se connecter</a></li>
-                            <li class="ongletMenu"><a href="{{ path("register") }}">S'enregistrer</a></li>
-                            <li><a href="#"><span>Contact</span></a></li>
-                        {% endif %}
-                    </ul>
-                </div>
-            {% endblock %}
+<div id="content">
+    {% if is_granted( 'IS_AUTHENTICATED_FULLY') %}
+        <div>
+        <p>Bonjour {{ app.user.firstname }}</p>
+    {% else %}
+        <p>Bienvenue !</p>
         </div>
+    {% endif %}
+    <div name="contact">
+        <div class="alert alert-success">
+            {% set flashbag_notices = app.session.flashbag.get('notice') %}
+            {% if flashbag_notices is not empty %}
 
-        <div id="content">
-            {% if is_granted( 'IS_AUTHENTICATED_FULLY') %}
-                <div>
-                <p>Email: {{ app.user.email }}</p>
-            {% else %}
-                <p>Welcome Anonymous</p>
-                </div>
-            {% endif %}
-            <div name="contact">
-                <div class="alert alert-success">
-                    {% set flashbag_notices = app.session.flashbag.get('notice') %}
-                    {% if flashbag_notices is not empty %}
-
-                    <div class="flash-notice">
-                        {% for notice in flashbag_notices %}
-                            {{notice}}
-                        {% endfor %}
-                    </div>
-                </div>
-                {% endif %}
-                {% block body %}{% endblock %}
+            <div class="flash-notice">
+                {% for notice in flashbag_notices %}
+                    {{notice}}
+                {% endfor %}
             </div>
         </div>
-        <!-- Footer -->
-        <footer class="page-footer font-small stylish-color-dark pt-4">
-        <!-- Footer Links -->
-            <div class="container text-center text-md-left">
-
-                <!-- Grid row -->
-                <div class="row">
-
-                    <!-- Grid column -->
-                    <div class="col-md-4 mx-auto">
-
-                        <!-- Content -->
-                        <h5 class="font-weight-bold text-uppercase mt-3 mb-4"></h5>
-                        <p>To fish peach or not to peach fish </p>
-
-                    </div>
-                    <!-- Grid column -->
-                    <hr class="clearfix w-100 d-md-none">
-                    <!-- Grid column -->
-                    <div class="col-md-2 mx-auto">
-
-                        <!-- Links -->
-                        <h5 class="font-weight-bold text-uppercase mt-3 mb-4">Links</h5>
-
-                        <ul class="list-unstyled">
-                            <li>
-                                <a href="#!">Link 1</a>
-                            </li>
-
-                        </ul>
-
-                    </div>
-                    <!-- Grid column -->
-
-                    <hr class="clearfix w-100 d-md-none">
-
-                    <!-- Grid column -->
-                    <div class="col-md-2 mx-auto">
-
-                        <!-- Links -->
-                        <h5 class="font-weight-bold text-uppercase mt-3 mb-4">Links</h5>
-
-                        <ul class="list-unstyled">
-                            <li>
-                                <a href="#!">Link 1</a>
-                            </li>
-                        </ul>
-
-                    </div>
-                    <!-- Grid column -->
-
-                    <hr class="clearfix w-100 d-md-none">
-
-                    <!-- Grid column -->
-                    <div class="col-md-2 mx-auto">
-
-                        <!-- Links -->
-                        <h5 class="font-weight-bold text-uppercase mt-3 mb-4">Links</h5>
-
-                        <ul class="list-unstyled">
-                            <li>
-                                <a href="#!">Link 1</a>
-                            </li>
-                        </ul>
-
-                    </div>
-                    <!-- Grid column -->
-
-                </div>
-                <!-- Grid row -->
-
-            </div>
-            <!-- Footer Links -->
-
-            <hr>
-
-            <!-- Call to action -->
-            <ul class="list-unstyled list-inline text-center py-2">
-                <li class="list-inline-item">
-                    <h5 class="mb-1">Vous êtes nouveau ?  alors inscriver vous !</h5>
-                </li>
-                    <a href="#" class="btn btn-danger btn-rounded">Connecter</a>
-                </li>
-            </ul>
-            <!-- Call to action -->
-
-            <hr>
-
-            <!-- Social buttons -->
-            <ul class="list-unstyled list-inline text-center">
-                <li class="list-inline-item">
-                    <a class="btn-floating btn-fb mx-1">
-                        <i class="fab fa-facebook-f"> </i>
-                    </a>
-                </li>
-                <li class="list-inline-item">
-                    <a class="btn-floating btn-tw mx-1">
-                        <i class="fab fa-twitter"> </i>
-                    </a>
-                </li>
-                <li class="list-inline-item">
-                    <a class="btn-floating btn-gplus mx-1">
-                        <i class="fab fa-google-plus-g"> </i>
-                    </a>
-                </li>
-                <li class="list-inline-item">
-                    <a class="btn-floating btn-li mx-1">
-                        <i class="fab fa-linkedin-in"> </i>
-                    </a>
-                </li>
-                <li class="list-inline-item">
-                    <a class="btn-floating btn-dribbble mx-1">
-                        <i class="fab fa-dribbble"> </i>
-                    </a>
-                </li>
-            </ul>
-            <!-- Social buttons -->
-
-            <!-- Copyright -->
-            <div class="footer-copyright text-center py-3">© 2020 Copyright:
-                <a href="https://mdbootstrap.com/"> Rui CHEN</a>
-            </div>
-            <!-- Copyright -->
-
-        </footer>
-        <!-- Footer -->
-    </body>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </div>
+</div>
+<!-- Footer -->
+{% block footer %}
+    {% include('footer.html.twig') %}
+{% endblock %}
+<!-- Footer -->
+</body>
 </html>

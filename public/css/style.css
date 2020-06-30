@@ -4,6 +4,15 @@
 * Global
 * ==========================================================================
 */
+.nav.navbar-nav.pull-right{
+    z-index: 1;
+    position: relative;
+    background: beige;
+}
+.nav.navbar-nav.pull-right li a{
+    color:currentColor!important;
+}
+
 .btn-primary{
     margin-left: 20px;
 }

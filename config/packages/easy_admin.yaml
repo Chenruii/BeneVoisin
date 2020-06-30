@@ -1,0 +1,31 @@
+easy_admin:
+  site_name: 'BeneVoisin'
+  list:
+    actions:
+      - { name: 'edit', icon: 'pencil'}
+  entities:
+  # List the entity class name you want to manage
+    Post:
+      class: App\Entity\Post
+      controller: App\Controller\PostController
+      label: 'Annonce'
+      list:
+        actions:
+          - { name: 'new', label: 'Ajouter', icon: 'add' }
+          - { name: 'show', label: '', icon: 'search' }
+          - { name: 'edit', label: '', icon: 'edit' }
+          - { name: 'delete', label: '', icon: 'times'}
+        fields:
+          - 'id'
+          - { property: 'titlePost', label: 'Titre' }
+          - { property: 'descriptionPost', label: 'Description' }
+          - { property: 'announcer', label: 'Auteur' }
+          - { property: 'dateEvent', label: 'Date de l evenement', sortable: true }
+      show:
+        title: 'Détails d une annonce'
+        fields:
+          - 'id'
+          - { property: 'titlePost', label: 'Titre' }
+          - { property: 'descriptionPost', label: 'Description' }
+          - { property: 'announcer', label: 'Auteur' }
+          - { property: 'dateEvent', label: 'Date de l evenement', sortable: true }
