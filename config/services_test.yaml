@@ -1,0 +1,8 @@
+# config/services_test.yaml
+services:
+  # access the service in your test via
+  # self::$container->get('test.App\Test\SomeTestHelper')
+  test.App\Test\functional\Controller:
+    # the id of the private service
+    alias: 'App\Test\functional\Controller'
+    public: true
