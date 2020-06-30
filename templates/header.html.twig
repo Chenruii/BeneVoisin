@@ -5,48 +5,49 @@
                 <ul class="nav navbar-nav pull-right">
                     {% if is_granted( 'IS_AUTHENTICATED_FULLY') %}
                     <li class="active"><a href="{{ path("post_index") }}">Accueil</a></li>
-                    <li class="dropdown-menu"><a href="">Mes annonces</a></li>
-                    {% else %}
-                        <li class="active"><a href="#">Tableau de bord</a></li>
-                    {% endif %}
-                    {% if is_granted( 'IS_AUTHENTICATED_ADMIN') %}
+                    <li class="dropdown"><a href="">Mes annonces</a></li>
                         <li class="dropdown"><a href="">Mon Profil</a></li>
-                            <ul class="dropdown-menu" aria-labelledby="navbar-spy" id="fistTop">
-                                <li><a href="">Information sur mon compte</a></li>
-                                {% if is_granted('ROLE_USER') %}
-                                    <li class="dropdown-submenu"><a href="">Mes annonces</a>
-                                        <ul class="dropdown-menu" id="secondDrop">
-                                            <li class="dropdown-item dropdown-toggle"><a href="">Liste</a></li>
-                                            <li class="dropdown-item"><a href="">Ajouter une Annonce</a></li>
-                                            <li class="dropdown-item"><a href="">Ajouter une Adresse</a></li>
-                                            <li class="dropdown-item"><a href="">Ajouter un Thème</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu"><a href="">Mes Adresses</a>
-                                        <ul class="dropdown-menu" id="secondDrop">
-                                            <li class="dropdown-item dropdown-toggle"><a href="">Historique de mes évènements</a></li>
-                                            <li class="dropdown-item"><a href="">Les évènements en cours</a></li>
-                                            <li class="dropdown-item"><a href="">Les évènements à venir</a></li>
-                                        </ul>
-                                    </li>
-                                {% endif %}
-                                {% if is_granted('ROLE_USER') %}
-                                <li class="dropdown-submenu"><a href="">Mes Annonces</a>
+                        <ul class="dropdown" aria-labelledby="navbar-spy" id="fistTop">
+                            <li><a href="">Information sur mon compte</a></li>
+                            {% if is_granted('ROLE_USER') %}
+                                <li class="dropdown-submenu"><a href="">Mes annonces</a>
+                                    <ul class="dropdown-menu" id="secondDrop">
+                                        <li class="dropdown-item dropdown-toggle"><a href="">Liste</a></li>
+                                        <li class="dropdown-item"><a href="">Ajouter une Annonce</a></li>
+                                        <li class="dropdown-item"><a href="">Ajouter une Adresse</a></li>
+                                        <li class="dropdown-item"><a href="">Ajouter un Thème</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu"><a href="">Mes Adresses</a>
                                     <ul class="dropdown-menu" id="secondDrop">
                                         <li class="dropdown-item dropdown-toggle"><a href="">Historique de mes évènements</a></li>
                                         <li class="dropdown-item"><a href="">Les évènements en cours</a></li>
                                         <li class="dropdown-item"><a href="">Les évènements à venir</a></li>
                                     </ul>
                                 </li>
-                                {% endif %}
-                            </ul>
+                            {% endif %}
+                            {% if is_granted('ROLE_USER') %}
+                                <li class="dropdown-submenu"><a href="">Mes Evènements</a>
+                                    <ul class="dropdown-menu" id="secondDrop">
+                                        <li class="dropdown-item dropdown-toggle"><a href="">Historique de mes évènements</a></li>
+                                        <li class="dropdown-item"><a href="">Les évènements en cours</a></li>
+                                        <li class="dropdown-item"><a href="">Les évènements à venir</a></li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                        </ul>
                         </li>
                     {% else %}
+                        <li class="active"><a href="#">Tableau de bord</a></li>
+                        <li class="active"><a href="post_index">Evènement</a></li>
+                        <li class="active"><a href="theme_index">Thème</a></li>
                         <li class="ongletMenu"><a href="{{ path("login") }}">Se connecter</a></li>
+                    {% endif %}
+                    {% if is_granted( 'IS_AUTHENTICATED_USER') %}
                         {% if is_granted('ROLE_USER') %}
                             <li class="ongletMenu"><a href="{{ path('logout') }}">{{ 'logout'|trans }}</a></li>
                         {% endif %}
-                        <li class="ongletMenu"><a href="{{ path("register") }}">S'enregistrer</a></li>
+                        <li class="ongletMenu"><a href="{{ path("register") }}">S'inscrire</a></li>
                         <li><a href="#"><span>Contact</span></a></li>
                     {% endif %}
                 </ul>
