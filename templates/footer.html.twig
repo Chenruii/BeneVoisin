@@ -1,0 +1,38 @@
+<footer class="page-footer font-small stylish-color-dark pt-4">
+    <div class="container text-center text-md-left">
+        <div class="row">
+            <div class="col-md-4 mx-auto">
+                <h5 class="font-weight-bold text-uppercase mt-3 mb-4"></h5>
+                <p>To fish peach or not to peach fish </p>
+            </div>
+            <hr class="clearfix w-100 d-md-none">
+            <div class="col-md-2 mx-auto">
+                <h5 class="font-weight-bold text-uppercase mt-3 mb-4">Liens</h5>
+                <ul class="list-unstyled"><li><a href="{{ path("post_index") }}">Accueil</a></li></ul>
+            </div>
+            <hr class="clearfix w-100 d-md-none">
+            <div class="col-md-2 mx-auto">
+                <h5 class="font-weight-bold text-uppercase mt-3 mb-4">Liens</h5>
+                <ul class="list-unstyled"><li><a href="#!">Annonce</a></li></ul>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <ul class="list-unstyled list-inline text-center py-2">
+        <li class="list-inline-item"><h5 class="mb-1">Vous êtes nouveau ?  alors inscriver vous !</h5></li>
+        <li class="list-inline-item">
+            <a href="{{ path("register") }}" class="btn btn-danger btn-rounded">S'inscrire</a>
+        </li>
+        {% if is_granted('ROLE_USER') %}
+            <li class="list-inline-item"><a href="{{ path('logout') }}">{{ 'logout'|trans }}</a></li>
+        {% endif %}
+    </ul>
+    <hr>
+    <ul class="list-unstyled list-inline text-center">
+        <li class="list-inline-item"><a class="btn-floating btn-fb mx-1"><i class="fa fa-facebook-f"> </i></a></li>
+        <li class="list-inline-item"><a class="btn-floating btn-tw mx-1"><i class="fa fa-twitter"> </i></a></li>
+        <li class="list-inline-item"><a class="btn-floating btn-li mx-1"><i class="fa fa-linkedin"> </i></a></li>
+    </ul>
+    <div class="footer-copyright text-center py-3">© 2020 Copyright:<a href="#"> Rui CHEN</a>
+    </div>
+</footer>

@@ -1,0 +1,79 @@
+<header>
+    <div id="sidebar">
+        {% block sidebar %}
+            <div id="navbar-spy" class=" navbar-collapse navbar-responsive-collapse">
+                <ul class="nav navbar-nav pull-right">
+                    {% if is_granted( 'IS_AUTHENTICATED_FULLY') %}
+                    <li class="active"><a href="{{ path("post_index") }}">Accueil</a></li>
+                    <li class="dropdown-menu"><a href="">Mes annonces</a></li>
+                    {% else %}
+                        <li class="active"><a href="#">Tableau de bord</a></li>
+                    {% endif %}
+                    {% if is_granted( 'IS_AUTHENTICATED_ADMIN') %}
+                        <li class="dropdown"><a href="">Mon Profil</a></li>
+                            <ul class="dropdown-menu" aria-labelledby="navbar-spy" id="fistTop">
+                                <li><a href="">Information sur mon compte</a></li>
+                                {% if is_granted('ROLE_USER') %}
+                                    <li class="dropdown-submenu"><a href="">Mes annonces</a>
+                                        <ul class="dropdown-menu" id="secondDrop">
+                                            <li class="dropdown-item dropdown-toggle"><a href="">Liste</a></li>
+                                            <li class="dropdown-item"><a href="">Ajouter une Annonce</a></li>
+                                            <li class="dropdown-item"><a href="">Ajouter une Adresse</a></li>
+                                            <li class="dropdown-item"><a href="">Ajouter un Thème</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu"><a href="">Mes Adresses</a>
+                                        <ul class="dropdown-menu" id="secondDrop">
+                                            <li class="dropdown-item dropdown-toggle"><a href="">Historique de mes évènements</a></li>
+                                            <li class="dropdown-item"><a href="">Les évènements en cours</a></li>
+                                            <li class="dropdown-item"><a href="">Les évènements à venir</a></li>
+                                        </ul>
+                                    </li>
+                                {% endif %}
+                                {% if is_granted('ROLE_USER') %}
+                                <li class="dropdown-submenu"><a href="">Mes Annonces</a>
+                                    <ul class="dropdown-menu" id="secondDrop">
+                                        <li class="dropdown-item dropdown-toggle"><a href="">Historique de mes évènements</a></li>
+                                        <li class="dropdown-item"><a href="">Les évènements en cours</a></li>
+                                        <li class="dropdown-item"><a href="">Les évènements à venir</a></li>
+                                    </ul>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="ongletMenu"><a href="{{ path("login") }}">Se connecter</a></li>
+                        {% if is_granted('ROLE_USER') %}
+                            <li class="ongletMenu"><a href="{{ path('logout') }}">{{ 'logout'|trans }}</a></li>
+                        {% endif %}
+                        <li class="ongletMenu"><a href="{{ path("register") }}">S'enregistrer</a></li>
+                        <li><a href="#"><span>Contact</span></a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        {% endblock %}
+    </div>
+    <div id="content">
+        {% if is_granted( 'IS_AUTHENTICATED_FULLY') %}
+            <div>
+            <p>&#9745; Bienvenue &commat;{{ app.user.lastname }}</p>
+        {% else %}
+            <p>&#9746; Oh,oh, Bonjour, Vous n'êtes pas connecter </p>
+            </div>
+        {% endif %}
+    </div>
+    <!--<div name="contact">
+            <div class="alert alert-success">
+                {% set flashbag_notices = app.session.flashbag.get('notice') %}
+                {% if flashbag_notices is not empty %}
+                    <div class="flash-notice">
+                        {% for notice in flashbag_notices %}
+                            {{ notice }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        -->
+</header>
+

@@ -4,7 +4,10 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\PostRepository;
+use App\Repository\ResidenceRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -91,4 +94,43 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('user_index');
     }
+
+    /**
+     * @Route("/dashboard", name="dashboard")
+     * @param ResidenceRepository $residenceRepository
+     * @param PostRepository $postRepository
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function dashboard(ResidenceRepository $residenceRepository, PostRepository $postRepository)
+    {
+        $posts =  $postRepository->find($this->getUser());
+        $residences =  $residenceRepository->findAll();
+        return $this->render('user/index.html.twig', [
+            'posts' => $posts,
+            'residences' => $residences
+        ]);
+    }
+
+    /**
+     * @Route("profile", name="profile")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function profile(Request $request, EntityManagerInterface $entityManager)
+    {
+
+        $user = $this->getUser();
+        $telephone = $user->getTelephones();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($user);
+            $entityManager->flush();
+            return $this->redirectToRoute('home');
+        }
+        return $this->render('user/profile.html.twig', [
+            'form' => $form->createView(),
+            'user' => $user,
+        ]);
+    }
+
 }
