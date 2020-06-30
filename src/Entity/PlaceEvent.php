@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\PlaceEventRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
  * @ORM\Entity(repositoryClass=PlaceEventRepository::class)
@@ -41,6 +42,14 @@ class PlaceEvent
      * @ORM\Column(type="string", length=255)
      */
     private $countryPlaceEvent;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @ManyToOne(targetEntity="Post", inversedBy="placeEvent")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
 
     public function getId(): ?int
     {

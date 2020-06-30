@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ThemeRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=ThemeRepository::class)
@@ -18,14 +19,20 @@ class Theme
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=150)
+     * @ORM\Column(type="string", length=150, nullable=true)
      */
     private $titleTheme;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $descriptionTheme;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Post", inversedBy="themes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $posts;
 
     public function getId(): ?int
     {
@@ -52,6 +59,17 @@ class Theme
     public function setDescriptionTheme(string $descriptionTheme): self
     {
         $this->descriptionTheme = $descriptionTheme;
+
+        return $this;
+    }
+    public function getPosts(): ?string
+    {
+        return $this->posts;
+    }
+
+    public function setPosts(string $posts): self
+    {
+        $this->descriptionTheme = $posts;
 
         return $this;
     }

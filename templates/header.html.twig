@@ -1,0 +1,49 @@
+<header>
+<div id="sidebar">
+    {% block sidebar %}
+        <div id="navbar-spy" class="navbar-collapse navbar-responsive-collapse">
+            <ul class="nav navbar-nav pull-right">
+                {% if is_granted( 'IS_AUTHENTICATED_FULLY') %}
+                    <li class="active"><a href="{{ path("user_index") }}">Tableau de bord</a></li>
+                {% else %}
+                    <li class="active"><a href="{{ path("home") }}">Accueil</a></li>
+                {% endif %}
+
+                {% if is_granted( 'IS_AUTHENTICATED_FULLY') %}
+                    <li class="active"><a href="{{ path("profile") }}">Mon Profil</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbar-spy" id="fistTop">
+                            <li><a href="">Information sur mon compte</a></li>
+                            {% if is_granted( 'ROLE_OWNER') %}
+                                <li class="dropdown-submenu"><a href="">Mes annonces</a>
+                                    <ul class="dropdown-menu" id="secondDrop">
+                                        <li class="dropdown-item dropdown-toggle"><a href="">Liste</a></li>
+                                        <li class="dropdown-item"><a href="">Ajouter une annonce</a></li>
+                                        <li class="dropdown-item"><a href="">Ajouter une Adresse</a></li>
+                                        <li class="dropdown-item"><a href="">Ajouter un Thème</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu"><a href="">Mes Adresses</a>
+                                    <ul class="dropdown-menu" id="secondDrop">
+                                        <li class="dropdown-item dropdown-toggle"><a href="">Historique de mes evevnements</a></li>
+                                        <li class="dropdown-item"><a href="">Les evenements en cours</a></li>
+                                        <li class="dropdown-item"><a href="">Les évènement à venir</a></li>
+                                    </ul>
+                                </li>
+                            {% else %}
+                            {% endif %}
+                        </ul>
+                    </li>
+                    <li class="ongletMenu"><a href="{{ path("home") }}">Accueil</a></li>
+                    <li class="ongletMenu">
+                        <a href="{{path('logout')}}">Déconnexion</a>
+                    </li>
+                {% else %}
+                    <li class="ongletMenu"><a href="{{ path("login") }}">Se connecter</a></li>
+                    <li class="ongletMenu"><a href="{{ path("register") }}">S'enregistrer</a></li>
+                    <li><a href="{{ path('contact') }}"><span>Contact</span></a></li>
+                {% endif %}
+            </ul>
+        </div>
+    {% endblock %}
+</div>
+</header>

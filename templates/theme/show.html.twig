@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Theme{% endblock %}
+{% block title %}Voir un thème{% endblock %}
 
-{% block body %}
+{% block content %}
     <h1>Theme</h1>
 
     <table class="table">
@@ -12,7 +12,7 @@
                 <td>{{ theme.id }}</td>
             </tr>
             <tr>
-                <th>Title</th>
+                <th>Titre</th>
                 <td>{{ theme.title }}</td>
             </tr>
             <tr>
@@ -22,9 +22,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('theme_index') }}">back to list</a>
+    <a href="{{ path('theme_index') }}">Revenir à la liste</a>
 
-    <a href="{{ path('theme_edit', {'id': theme.id}) }}">edit</a>
+    <a href="{{ path('theme_edit', {'id': theme.id}) }}">Modifier</a>
 
     {{ include('theme/_delete_form.html.twig') }}
 {% endblock %}

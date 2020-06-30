@@ -5,8 +5,6 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\ManyToOne;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -43,24 +41,27 @@ class User implements UserInterface
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @ManyToOne(targetEntity="Residence")
-     * @JoinColumn(name="residence_id", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="App\Entity\Residence", mappedBy="user",orphanRemoval=true)
      */
-    private $residence;
+    private $residences;
 
     /**
-     * @ORM\Column(type="string", length=150, nullable=true)
-     * @ManyToOne(targetEntity="Post")
-     * @JoinColumn(name="post_id", referencedColumnName="id")
+     *  @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="users", orphanRemoval=true)
      */
     private $post;
+
 
     /**
      * @ORM\Column(type="simple_array")
      */
     private $roles;
 
+    /**
+     * @ORM\Column()
+     * @Assert\NotBlank()
+     * @Assert\Length(max=10)
+     *
+     */
     private $password;
 
     private $plainPassword;
@@ -68,7 +69,7 @@ class User implements UserInterface
     public function __construct()
     {
         $this->roles = array('ROLE_USER');
-        $this->residences = new ArrayCollection();
+        $this->residence = new ArrayCollection();
         $this->post = new ArrayCollection();
     }
 
@@ -195,26 +196,26 @@ class User implements UserInterface
         return $this;
     }
     /**
-     * @return Collection|PlaceEvent[]
+     * @return Collection|Residence[]
      */
     public function getResidence(): Collection
     {
-        return $this->residence;
+        return $this->residences;
     }
 
     public function addResidence(Residence $residence): self
     {
-        if (!$this->residence->contains($residence)) {
-            $this->residence[] = $residence;
+        if (!$this->residences->contains($residence)) {
+            $this->residences[] = $residence;
         }
 
         return $this;
     }
 
-    public function removeResidence(PlaceEvent $residence): self
+    public function removeResidence(PlaceEvent $residences): self
     {
-        if ($this->residence->contains($residence)) {
-            $this->residence->removeElement($residence);
+        if ($this->residences->contains($residences)) {
+            $this->residences->removeElement($residences);
             // set the owning side to null (unless already changed)
         }
         return $this;
