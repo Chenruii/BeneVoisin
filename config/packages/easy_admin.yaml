@@ -1,10 +1,25 @@
 easy_admin:
   site_name: 'BeneVoisin'
+  formats:
+    date:     'd/m/Y'
+    time:     'H:i'
+    datetime: 'd/m/Y H:i'
   list:
     actions:
       - { name: 'edit', icon: 'pencil'}
   entities:
   # List the entity class name you want to manage
+    User:
+      #            disabled_actions: ['new','delete','edit']
+      class: App\Entity\User
+      label: Gestion des utilisateurs
+      list:
+        fields:
+          - { property: 'email', label: 'Email' }
+          - { property: 'password', permission: 'uu' }
+          - { property: 'lastname', label: 'Nom' }
+          - { property: 'firstname', label: 'Prenom' }
+          - { property: 'roles', label: 'Role' }
     Post:
       class: App\Entity\Post
       controller: App\Controller\PostController
@@ -29,3 +44,30 @@ easy_admin:
           - { property: 'descriptionPost', label: 'Description' }
           - { property: 'announcer', label: 'Auteur' }
           - { property: 'dateEvent', label: 'Date de l evenement', sortable: true }
+
+    residence:
+      class: App\Entity\Residence
+      label: Gestion des adresses
+      list:
+        fields:
+          - { property: 'id', label: 'Numéro identification' }
+          - { property: 'trackNumber', label: 'Numero' }
+          - { property: 'track', label: 'Rue' }
+          - { property: 'hall', label: 'Bâtiment' }
+          - { property: 'city', label: 'Ville' }
+          - { property: 'zipCode', label: 'Code postal' }
+          - { property: 'user', label: 'Propriétaire' }
+
+    placeEvent:
+      class: App\Entity\PlaceEvent
+      label: Gestion des adresses des évenements
+      list:
+        fields:
+          - { property: 'id', label: 'Numéro identification' }
+          - { property: 'districtPlaceEvent', label: 'Quartier' }
+          - { property: 'labelPlaceEvent', label: 'Label ( num + nom du rue) ' }
+            #                    - { property: 'numero', label: 'N° rue' }
+          - { property: 'cityPlaceEvent', label: 'Ville' }
+          - { property: 'ZipCodePlaceEvent', label: 'Code postal' }
+          - { property: 'countryPlaceEvent', label: 'Pays' }
+          - { property: 'user', label: 'Propriétaire' }
