@@ -10,22 +10,47 @@
     <meta name="author" content="">
 
     <!-- CSS -->
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('css/animate.min.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/animate.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet" />
 
 </head>
 <body>
 {% set route = app.request.attributes.get('_route') %}
-
 {% block header %}
+    {% include('header.html.twig') %}
 {% endblock %}
 
-{% block content %}
-{% endblock %}
 
+<div id="content">
+    {% if is_granted( 'IS_AUTHENTICATED_FULLY') %}
+        <div>
+        <p>&#9745; Bienvenue &commat;{{ app.user.lastname }}</p>
+    {% else %}
+        <p>&#9746; Oh,oh, Bonjour, Vous n'êtes pas connecter </p>
+        </div>
+    {% endif %}
+
+    <div name="contact">
+        <div class="alert alert-success">
+            {% set flashbag_notices = app.session.flashbag.get('notice') %}
+            {% if flashbag_notices is not empty %}
+
+            <div class="flash-notice">
+                {% for notice in flashbag_notices %}
+                    {{notice}}
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </div>
+</div>
+<!-- Footer -->
 {% block footer %}
+    {% include('footer.html.twig') %}
 {% endblock %}
+<!-- Footer -->
 </body>
 </html>

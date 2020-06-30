@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Location{% endblock %}
+{% block title %}Nouvelle adresse{% endblock %}
 
-{% block body %}
-    <h1>Create new Location</h1>
+{% block content %}
+    <h1>Ajouter une nouvelle adresse</h1>
 
     {{ include('residence/_form.html.twig') }}
 
-    <a href="{{ path('location_index') }}">back to list</a>
+    <a href="{{ path('location_index') }}">Retour à la liste</a>
 {% endblock %}

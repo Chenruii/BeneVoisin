@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition d'un lieu d'évènement{% endblock %}
+
+{% block content %}
+    <h1>Editer un lieu d'évènement</h1>
+
+    {{ include('placeEvent/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('placeEvent_index') }}">Retour à la liste</a>
+
+    {{ include('placeEvent/_delete_form.html.twig') }}
+{% endblock %}

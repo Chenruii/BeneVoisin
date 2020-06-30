@@ -53,15 +53,6 @@
             </div>
         {% endblock %}
     </div>
-    <div id="content">
-        {% if is_granted( 'IS_AUTHENTICATED_FULLY') %}
-            <div>
-            <p>&#9745; Bienvenue &commat;{{ app.user.lastname }}</p>
-        {% else %}
-            <p>&#9746; Oh,oh, Bonjour, Vous n'êtes pas connecter </p>
-            </div>
-        {% endif %}
-    </div>
     <!--<div name="contact">
             <div class="alert alert-success">
                 {% set flashbag_notices = app.session.flashbag.get('notice') %}

@@ -8,6 +8,7 @@ use App\Form\ProfileUserType;
 use App\Form\RegisterUserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,6 +28,9 @@ class SecurityController extends AbstractController
     }
     /**
      * @Route("/register", name="register")
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @return RedirectResponse|Response
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -50,22 +54,16 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils):Response
     {
-        /*$user = new User();
+        $user = new User();
         $form = $this->createForm(LoginUserType::class, $user);
-
-        return $this->render('security/login.html.twig', [
-            'error' => $authenticationUtils->getLastAuthenticationError(),
-            'form' => $form->createView()
-        ]);*/
-
         $error = $authenticationUtils->getLastAuthenticationError();
         $email = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', [
+            'error' => $error,
+            'form' => $form->createView(),
             'email' => $email,
-            'error' => $error
         ]);
-
     }
     /**
      * @Route("/profile", name="profile")

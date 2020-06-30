@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Residence;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -19,7 +20,7 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 class DefaultController extends AbstractController
 {
     /**
-     * @Route("/default", name="default")
+     * @Route("/home", name="home")
      */
     public function index()
     {
@@ -29,22 +30,20 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/form", name="contact")
-     * @param Request $request
+     * @Route("/contactForm", name="contact")
      */
-
-    public function createAction(Request $request)
+    public function contact()
     {
-        $contact = new Residence;
+        return $this->render('default/contact.html.twig', [
+        ]);
+    }
 
-        $form = $this->createFormBuilder($contact)
-            ->add('name', TextType::class, array('label' => 'name', 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
-            ->add('email', TextType::class, array('label' => 'email', 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
-            ->add('subject', TextType::class, array('label' => 'subject', 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
-            ->add('message', TextareaType::class, array('label' => 'message', 'attr' => array('class' => 'form-control')))
-            ->add('Save', SubmitType::class, array('label' => 'submit', 'attr' => array('class' => 'btn btn-primary', 'style' => 'margin-top:15px')))
-            ->getForm();
-
-        $form->handleRequest($request);
+    /**
+     * @Route("/mentionsLegales", name="mentions")
+     */
+    public function mentions()
+    {
+        return $this->render('default/mentions.html.twig', [
+        ]);
     }
 }

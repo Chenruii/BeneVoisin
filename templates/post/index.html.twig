@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}post index{% endblock %}
+{% block title %}Accueil des évènements{% endblock %}
 
-{% block body %}
+{% block content %}
 
     <section id="services" class="services-section section-global-wrapper">
         <div class="container">
             <div class="row">
                 <div class="services-header">
-                    <h3 class="services-header-title">Liste des posts</h3>
-                    <p class="services-header-body"><em> To fish peach or not to peach fish </em>  </p><hr>
+                    <h3 class="services-header-title">Liste des évènements</h3>
+                    <p class="services-header-body"><em> "To fish peach or not to peach fish" </em>  </p><hr>
                 </div>
             </div>
 
@@ -20,7 +20,7 @@
 
                     <div class="services-group wow animated fadeInLeft animated" data-wow-offset="40" style="visibility: visible; animation-name: fadeInLeft;">
                         <p class="services-icon"><span class="fa fa-android fa-5x"></span></p>
-                        <h4 class="services-title">Annonces</h4>
+                        <h4 class="services-title">Evènements</h4>
                         {% if posts is not empty %}
                         {% for post in posts %}
                         <p class="services-body">Titre: {{ post.titlePost }} <br>{{ post.descriptionPost }}<br>{{ post.announcer }}</p>
@@ -31,11 +31,11 @@
                             <p class="services-more"><a href="{{ path('post_edit', {'id': posts.id}) }}">Editer</a></p>
                         {% endfor %}
                         {% else %}
-                            <p>Pas d'annonce disponbles !</p>
+                            <p>Pas d'évènement disponble !</p>
                         {% endif %}
                     </div>
 
-                    <p class="services-more"><a href="{{ path('post_new') }}">Ajouter une post</a></p>
+                    <p class="services-more"><a href="{{ path('post_new') }}">Ajouter un évènement</a></p>
                 </div>
             </div>
             <!-- End Serivces Row 1 -->
