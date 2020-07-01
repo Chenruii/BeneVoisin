@@ -34,8 +34,22 @@ class DefaultController extends AbstractController
      */
     public function contact()
     {
+<<<<<<< HEAD
 		return $this->render('default/contact.html.twig', [
 		]);
+=======
+        return $this->render('default/contact.html.twig', [
+        ]);
+    }
+
+    /**
+     * @Route("/mentionsLegales", name="mentions")
+     */
+    public function mentions()
+    {
+        return $this->render('default/mentions.html.twig', [
+        ]);
+>>>>>>> fb3156ed45a27728f034f384076405be44609394
     }
 
 	/**
