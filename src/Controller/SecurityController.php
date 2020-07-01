@@ -28,15 +28,9 @@ class SecurityController extends AbstractController
     }
     /**
      * @Route("/register", name="register")
-<<<<<<< HEAD
-	 * @param Request $request
-	 * @param UserPasswordEncoderInterface $passwordEncoder
-	 * @return RedirectResponse|Response
-=======
      * @param Request $request
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @return RedirectResponse|Response
->>>>>>> fb3156ed45a27728f034f384076405be44609394
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -62,22 +56,13 @@ class SecurityController extends AbstractController
     {
         $user = new User();
         $form = $this->createForm(LoginUserType::class, $user);
-<<<<<<< HEAD
-		$error = $authenticationUtils->getLastAuthenticationError();
-		$email = $authenticationUtils->getLastUsername();
-=======
         $error = $authenticationUtils->getLastAuthenticationError();
         $email = $authenticationUtils->getLastUsername();
->>>>>>> fb3156ed45a27728f034f384076405be44609394
 
         return $this->render('security/login.html.twig', [
             'error' => $error,
             'form' => $form->createView(),
-<<<<<<< HEAD
-			'email' => $email,
-=======
             'email' => $email,
->>>>>>> fb3156ed45a27728f034f384076405be44609394
         ]);
     }
 

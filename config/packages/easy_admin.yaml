@@ -43,9 +43,6 @@ easy_admin:
           - { property: 'titlePost', label: 'Titre' }
           - { property: 'descriptionPost', label: 'Description' }
           - { property: 'announcer', label: 'Auteur' }
-<<<<<<< HEAD
-          - { property: 'dateEvent', label: 'Date de l evenement', sortable: true }
-=======
           - { property: 'dateEvent', label: 'Date de l evenement', sortable: true }
 
     residence:
