@@ -16,6 +16,7 @@
     {{ form_row(form.email) }}
     {{ form_row(form.password) }}
     {{ form_row(form.submit) }}
+    <a href="{{ path("reset_password") }}" class="btn btn-danger btn-rounded">Réinitialiser le mot de passe </a>
     {{ form_end(form) }}
 {% endblock %}
 

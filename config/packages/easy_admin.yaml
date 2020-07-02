@@ -4,11 +4,32 @@ easy_admin:
     date:     'd/m/Y'
     time:     'H:i'
     datetime: 'd/m/Y H:i'
+  design:
+    brand_color: '#1ABC9C'
+    assets:
+      #      favicon: { path: '' }
+      css:
+        - 'css/admin.css'
+        - 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css'
+        - 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker-standalone.min.css'
+      js:
+        - 'js/myJS.js'
+        - 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js'
+        - 'https://code.jquery.com/ui/1.12.1/jquery-ui.min.js'
+    form_theme:
+      - '@EasyAdmin/form/bootstrap_4.html.twig'
+    menu:
+      - { label: 'Tableau de bord' ,icon: 'dashboard' ,route: 'admin_dashboard' ,default: true , role: ROLE_ADMIN }
+      - { label: 'Posts', role: ROLE_ADMIN, icon: 'user-circle-o',  css_class: 'postAdmin', children: [ { label: 'Liste des posts', role: ROLE_ADMIN, icon: 'user-circle-o', entity: 'Post' } ] }
+      - { label: 'Thèmes', role: ROLE_ADMIN, icon: 'user-circle-o', css_class: 'themeAdmin', children: [ { label: 'Liste des thèmes', role: ROLE_ADMIN, icon: 'user-circle-o', entity: 'Theme' }] }
+      - { label: 'Utilisateurs', role: ROLE_ADMIN, icon: 'user-circle-o', children: [ { label: 'Utilisateurs', entity: 'User', icon: 'user' } ] }
+      - { label: 'Monitoring', role: ROLE_ADMIN, icon: 'desktop', children: [ { label: 'Alert', icon: 'exclamation-circle',route: 'home' },{ label: 'Logs', icon: 'file-archive-o',route: 'home'} ] }
+      - { label: 'Deconnexion', role: ROLE_ADMIN, icon: 'desktop', path: '/logout' }
   list:
     actions:
       - { name: 'edit', icon: 'pencil'}
   entities:
-  # List the entity class name you want to manage
+    # List the entity class name you want to manage
     User:
       #            disabled_actions: ['new','delete','edit']
       class: App\Entity\User
@@ -20,9 +41,54 @@ easy_admin:
           - { property: 'lastname', label: 'Nom' }
           - { property: 'firstname', label: 'Prenom' }
           - { property: 'roles', label: 'Role' }
+      show:
+        fields:
+          - { property: 'email', label: 'Email' }
+          - { property: 'password', permission: 'uu' }
+          - { property: 'lastname', label: 'Nom' }
+          - { property: 'firstname', label: 'Prenom' }
+          - { property: 'roles', label: 'Role' }
+      edit:
+        title: 'Modifier un utilisateur'
+      form:
+        title: 'Création d un utilisateur'
+        fields:
+          - { property: 'email', label: 'Email' }
+          - { property: 'password', permission: 'uu' }
+          - { property: 'lastname', label: 'Nom' }
+          - { property: 'firstname', label: 'Prenom' }
+          - { property: 'roles', label: 'Role' }
+
+    Theme:
+      class: App\Entity\Theme
+      label: 'Thème'
+      list:
+        actions:
+          - { name: 'new', label: 'Ajouter', icon: 'add' }
+          - { name: 'show', label: '', icon: 'search' }
+          - { name: 'edit', label: '', icon: 'edit' }
+          - { name: 'delete', label: '', icon: 'times'}
+        fields:
+          - { property: 'titleTheme', label: 'Titre' }
+          - { property: 'descriptionTheme', label: 'Description du thème' }
+          - { property: 'posts', label: 'Annonces du thème' }
+      show:
+        title: 'Détails d un thème'
+        fields:
+          - { property: 'titleTheme', label: 'Titre' }
+          - { property: 'descriptionTheme', label: 'Description du thème' }
+          - { property: 'posts', label: 'Annonces du thème', type_options: { required: false } }
+      edit:
+        title: 'Modifier un Thème'
+      form:
+        title: 'Création d un thème'
+        fields:
+          - { property: 'titleTheme', label: 'Titre' }
+          - { property: 'descriptionTheme', label: 'Description du thème' }
+          - { property: 'posts', label: 'Annonces du thème', type_options: { required: false } }
+
     Post:
       class: App\Entity\Post
-      controller: App\Controller\PostController
       label: 'Annonce'
       list:
         actions:
@@ -31,42 +97,102 @@ easy_admin:
           - { name: 'edit', label: '', icon: 'edit' }
           - { name: 'delete', label: '', icon: 'times'}
         fields:
-          - 'id'
           - { property: 'titlePost', label: 'Titre' }
           - { property: 'descriptionPost', label: 'Description' }
           - { property: 'announcer', label: 'Auteur' }
+          - { property: 'contact', label: 'Contact', type_options: { required: false } }
           - { property: 'dateEvent', label: 'Date de l evenement', sortable: true }
+          - { property: 'placeEvent', label: 'Lieu', type_options: { required: false } }
+          - { property: 'postType', label: 'Type d annonce', type_options: { required: false } }
+          - { property: 'users', label: 'Inscrits', type_options: { required: false } }
+#          - { property: 'themes', label: 'Thème de l annonce', type_options: { required: false } }
       show:
         title: 'Détails d une annonce'
         fields:
-          - 'id'
           - { property: 'titlePost', label: 'Titre' }
           - { property: 'descriptionPost', label: 'Description' }
           - { property: 'announcer', label: 'Auteur' }
           - { property: 'dateEvent', label: 'Date de l evenement', sortable: true }
+          - { property: 'placeEvent', label: 'Lieu', type_options: { required: false } }
+          - { property: 'postType', label: 'Type d annonce', type_options: { required: false } }
+          - { property: 'users', label: 'Inscrits', type_options: { required: false } }
+#          - { property: 'themes', label: 'Thème de l annonce', type_options: { required: false } }
+      edit:
+        title: 'Modifier une annonce'
+      form:
+        title: 'Création d une annonce'
+        fields:
+          - { property: 'titlePost', label: 'Titre' }
+          - { property: 'descriptionPost', label: 'Description' }
+          - { property: 'announcer', label: 'Auteur' }
+          - { property: 'dateEvent', label: 'Date de l evenement', sortable: true }
+          - { property: 'placeEvent', label: 'Lieu', type_options: { required: false } }
+          - { property: 'postType', label: 'Type d annonce', type_options: { required: false } }
+#          - { property: 'users', label: 'Inscrits', type_options: { required: false } }
+#          - { property: 'themes', label: 'Thème de l annonce', type_options: { required: false } }
 
-    residence:
+    Residence:
       class: App\Entity\Residence
       label: Gestion des adresses
       list:
         fields:
-          - { property: 'id', label: 'Numéro identification' }
           - { property: 'trackNumber', label: 'Numero' }
           - { property: 'track', label: 'Rue' }
           - { property: 'hall', label: 'Bâtiment' }
           - { property: 'city', label: 'Ville' }
           - { property: 'zipCode', label: 'Code postal' }
           - { property: 'user', label: 'Propriétaire' }
+      show:
+        title: 'Détails d une adresse'
+        fields:
+          - { property: 'trackNumber', label: 'Numero' }
+          - { property: 'track', label: 'Rue' }
+          - { property: 'hall', label: 'Bâtiment' }
+          - { property: 'city', label: 'Ville' }
+          - { property: 'zipCode', label: 'Code postal' }
+          - { property: 'user', label: 'Propriétaire' }
+      edit:
+        title: 'Modifier une adresse'
+      form:
+        title: 'Création d une adresse'
+        fields:
+          - { property: 'trackNumber', label: 'Numero' }
+          - { property: 'track', label: 'Rue' }
+          - { property: 'hall', label: 'Bâtiment', type_options: { required: false } }
+          - { property: 'city', label: 'Ville' }
+          - { property: 'zipCode', label: 'Code postal' }
+          - { property: 'user', label: 'Propriétaire' }
 
-    placeEvent:
+    PlaceEvent:
       class: App\Entity\PlaceEvent
       label: Gestion des adresses des évenements
       list:
         fields:
-          - { property: 'id', label: 'Numéro identification' }
           - { property: 'districtPlaceEvent', label: 'Quartier' }
           - { property: 'labelPlaceEvent', label: 'Label ( num + nom du rue) ' }
-            #                    - { property: 'numero', label: 'N° rue' }
+          #                    - { property: 'numero', label: 'N° rue' }
+          - { property: 'cityPlaceEvent', label: 'Ville' }
+          - { property: 'ZipCodePlaceEvent', label: 'Code postal' }
+          - { property: 'countryPlaceEvent', label: 'Pays' }
+          - { property: 'user', label: 'Propriétaire' }
+      show:
+        title: 'Détails d une localisation d évènement'
+        fields:
+          - { property: 'districtPlaceEvent', label: 'Quartier' }
+          - { property: 'labelPlaceEvent', label: 'Label ( num + nom du rue) ' }
+          #                    - { property: 'numero', label: 'N° rue' }
+          - { property: 'cityPlaceEvent', label: 'Ville' }
+          - { property: 'ZipCodePlaceEvent', label: 'Code postal' }
+          - { property: 'countryPlaceEvent', label: 'Pays' }
+          - { property: 'user', label: 'Propriétaire' }
+      edit:
+        title: 'Modifier une localisation d évènement'
+      form:
+        title: 'Création d une localisation d évènement'
+        fields:
+          - { property: 'districtPlaceEvent', label: 'Quartier', type_options: { required: false } }
+          - { property: 'labelPlaceEvent', label: 'Label ( num + nom du rue) ' }
+          #                    - { property: 'numero', label: 'N° rue' }
           - { property: 'cityPlaceEvent', label: 'Ville' }
           - { property: 'ZipCodePlaceEvent', label: 'Code postal' }
           - { property: 'countryPlaceEvent', label: 'Pays' }

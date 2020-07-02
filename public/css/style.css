@@ -4,6 +4,11 @@
 * Global
 * ==========================================================================
 */
+
+.services-group{
+    border:3px solid white;
+}
+
 .nav.navbar-nav.pull-right{
     z-index: 1;
     position: relative;

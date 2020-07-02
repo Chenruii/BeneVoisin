@@ -4,13 +4,81 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-sm-4">
-                <h2 class=page-header>Accueil </h2>
+            <div>
+                <div class="rowbarHeaderTitle align-items-center">
+                    <h1 class="page-header d-flex justify-content-center">Accueil</h1>
+                    <h2 class="page-header-bis d-flex justify-content-center"> - Les annonces - </h2>
+                    <hr>
+                </div>
 
-                {#                {{form_start(form)}}#}
-                {#                {{form_widget(form)}}#}
-                {#                {{form_end(form)}}#}
+                <div class="row">
+                    <!-- Blog Entries Column -->
+                    <div class="col-md-8">
 
+                        <!-- Blog Post -->
+                        {% for post in posts %}
+                            <div class="card mb-4">
+                                {#                                <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">#}
+                                <div class="card-body">
+                                    <h2 class="card-title">{{ post.titlePost }}</h2>
+                                    <p class="card-text">{{ post.descriptionPost }}</p>
+                                    <a href="{{ path('post_show', {id: post.id}) }}" class="btn btn-primary">En savoir +</a>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    {{ post.dateEvent | format_datetime('full', 'none', locale='fr') }}
+                                    <a href="#">{{ post.announcer }}</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <!-- Pagination -->
+                        <ul class="pagination justify-content-center mb-4">
+                            <li class="page-item">
+                                <a class="page-link" href="#">&larr; Précedente</a>
+                            </li>
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#">Suivante &rarr;</a>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                    <!-- Sidebar Widgets Column -->
+                    <div class="col-md-4">
+
+                        <!-- Search Widget -->
+                        <div class="card my-4">
+                            <h5 class="card-header">Rechercher une annonce</h5>
+                            <div class="card-body">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Recherche ...">
+                                        <span class="input-group-append">
+                                            <button class="btn btn-secondary" type="button">C'est parti !</button>
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Categories Widget -->
+                        <div class="card my-4">
+                            <h5 class="card-header">Thèmes</h5>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <ul class="list-unstyled mb-0 row">
+                                            {% for theme in themes %}
+                                            <li class="col-lg-6">
+                                                <a href="{{ path('theme_show', {id: theme.id}) }}">{{ theme.titleTheme }}</a>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>

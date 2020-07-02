@@ -47,6 +47,7 @@ class User implements UserInterface
 
     /**
      *  @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="users", orphanRemoval=true)
+	 *  @ORM\JoinColumn(nullable=true)
      */
     private $post;
 

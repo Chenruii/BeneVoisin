@@ -36,31 +36,13 @@
     <div class="row services-row services-row-tail services-row-2">
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
             <div class="services-group wow animated fadeInLeft animated" data-wow-offset="40" style="visibility: visible; animation-name: fadeInLeft;">
-                <p class="services-icon"><span class="fa fa-windows fa-5x"></span></p>
-                <h4 class="services-title">Derniers évènements ajoutés</h4>
+                <h4 class="services-title">Dernières annonces ajoutées</h4>
                 <ul class="services-body">
-                    <li>Cras interdum placerat libero vel tempor. </li>
-                    <li>Curabitur gravida iaculis erat quis dignissim</li>
+                    {% for annonce in annonces %}
+                    <li>{{ annonce.titleAnnonce }}</li>
+                    {% endfor %}
                 </ul>
-                <p class="services-more"><a href="#">Voir toute la liste</a></p>
-            </div>
-        </div>
-
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-            <div class="services-group wow animated zoomIn animated" data-wow-offset="40" style="visibility: visible; animation-name: zoomIn;">
-                <p class="services-icon"><i class="fa fa-eye fa-5x"></i></p>
-                <h4 class="services-title">RETINA READY</h4>
-                <p class="services-body">Cras interdum placerat libero vel tempor. Curabitur gravida iaculis erat quis dignissim.</p>
-                <p class="services-more"><a href="#">Find Out More</a></p>
-            </div>
-        </div>
-
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-            <div class="services-group wow animated fadeInRight animated" data-wow-offset="40" style="visibility: visible; animation-name: fadeInRight;">
-                <p class="services-icon"><i class="fa fa-cube fa-5x"></i></p>
-                <h4 class="services-title">Cubic</h4>
-                <p class="services-body">Cras interdum placerat libero vel tempor. Curabitur gravida iaculis erat quis dignissim.</p>
-                <p class="services-more"><a href="#">Find Out More</a></p>
+                <p class="services-more"><a href="{{ path('annonces_user') }}">Voir toute la liste entière</a></p>
             </div>
         </div>
     </div>

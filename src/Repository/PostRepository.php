@@ -47,4 +47,11 @@ class PostRepository extends ServiceEntityRepository
         ;
     }
     */
+	public function search($titlePost) {
+		return $this->createQueryBuilder('Post')
+			->andWhere('Post.titlePost LIKE :titlePost')
+			->setParameter('titlePost', '%'.$titlePost.'%')
+			->getQuery()
+			->execute();
+	}
 }

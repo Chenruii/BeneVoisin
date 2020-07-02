@@ -13,21 +13,28 @@
             </div>
 
             <!-- Begin Services Row 1 -->
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                    {% for theme in themes %}
-                    <div class="services-group wow animated zoomIn animated" data-wow-offset="40" style="visibility: visible; animation-name: zoomIn;">
-                        <p class="services-icon"><i class="fa fa-apple fa-5x"></i></p>
-                        <h4 class="services-title">Thème</h4>
-
-                            <p class="services-body">Titre:{{ theme.title }} <br>Description: {{ theme.description }}</p>
-                        {% else %}
-                            <p class="services-body">Aucun thème à afficher</p>
-                            <br>
-                        {% endfor %}
-                        <p class="services-more"> <a href="{{ path('theme_new') }}">Ajouter un nouveau theme</a></p>
-                    </div>
+            <!-- Begin Services Row 1 -->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                {% for theme in themes %}
+                <div class="col-lg-4 services-group wow animated zoomIn animated" data-wow-offset="40" style="visibility: visible; animation-name: zoomIn;">
+{#                    <p class="services-icon"><i class="fa fa-apple fa-5x"></i></p>#}
+                    {% if theme is not empty %}
+                        <h4 class="services-title">Thème {{ loop.index }}</h4>
+                        <p class="services-body">Titre : {{ theme.titleTheme }} <br>Description : {{ theme.descriptionTheme }}</p>
+                    {% else %}
+                        <p class="services-body">Aucun thème à afficher</p>
+                        <br>
+                    {% endif %}
                 </div>
+                    {% endfor %}
+                </div>
+                    {% if is_granted('ROLE_USER') %}
+                        <p class="services-more"> <a href="{{ path('theme_new') }}">Ajouter un nouveau theme</a></p>
+                    {% endif %}
             </div>
+        </div>
+        <!-- End Serivces Row 1 -->
             <!-- End Serivces Row 1 -->
     </section>
 {% endblock %}
