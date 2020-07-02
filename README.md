@@ -24,15 +24,29 @@
   - Agrandir sa communauté de vie
   - Parfaire ses savoirs-faire
   
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)  
 [![Build Status](https://travis-ci.org/Sidfate/helpers.svg?branch=master)](https://travis-ci.org/Sidfate/helpers)
 
+Si vous avez besoin du code source complet pour ce projet,
+vous pouvez y accéder ici, ou vous pouvez obtenir le code source en utilisant ce qui suit.
+
 # Pour Commencer
+git clone https://github.com/Chenruii/BeneVoisin
+(c'est le dépôt de l'auteur original qui a maintenant été nettoyé, mettez à jour le code de ce dépôt) prêt à l'emploi ; le tutoriel suivant est également de l'auteur original ;)
 
 ## Pré-requis
-Besoin des logiciel
+Tout d'abord, vous devez installer l'environnement PHP sur votre ordinateur et installer git. 
+Besoin des logiciel.
+
+Si vous souhaitez en savoir plus sur le composer, vous pouvez vous référer à ce site.
 - [Docker CE](https://www.docker.com/community-edition)
 - [Docker Compose](https://docs.docker.com/compose/install)
+
+Symfony a également adopté ce serveur construit à partir de PHP en utilisant simplement sur la ligne de commande. 
+php app/console server:run pour démarrer des applications basées sur Symfony. 
+
+près avoir installé le compositeur, nous pouvons commencer à installer notre projet
 
 ## Installation
 pour lancer la fixture
@@ -42,18 +56,24 @@ pour purger
 php bin/console doctrine:fixtures:load --purger=my_purger
 
 # Démarrage
+cp .env.dist .env
 demarrer docker
 docker-compose up -d
+docker-compose exec --user=application web composer install
 lance le server 
 docker-compose exec web php/console server:run
 
 # Fabriqué avec
 - Boostrap.css - Framework CSS (front-end)
 - Phpstorm - IDE 
+
 # Contributing
+Voir le fichier CONTRIBUTING.md pour plus d'informations
+
 # Versions
+ V.1
 # Author 
-- Rui   
-- Justine
+- Rui    @Chenruii
+- Justine @jhilzheber
 # License
 Ce projet est sous licence MIT - voir le fichier LICENSE.md pour plus d'informations
